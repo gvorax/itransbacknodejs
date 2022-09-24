@@ -120,11 +120,7 @@ exports.getUsers = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   const { id, status } = req.body;
-  const user = await User.findOneAndUpdate(
-    { _id: id },
-    { status: status },
-    { new: true }
-  );
+  const user = await User.findByIdAndUpdate(id, { status: status });
   console.log(user);
   await res.send(user);
 };
