@@ -102,8 +102,7 @@ exports.login = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
   const { id } = req.body;
-  await User.findById(id)
-    .then((user) => user.remove())
+  await User.findByIdAndRemove(id)
     .then((user) =>
       res.status(201).json({ message: 'User successfully deleted', user })
     )
