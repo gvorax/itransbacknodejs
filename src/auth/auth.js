@@ -123,8 +123,8 @@ exports.updateUser = async (req, res, next) => {
   const user = await User.findOneAndUpdate(
     { _id: id },
     { status: status },
-    { new: true, upsert: true }
+    { new: true }
   );
-  console.log(user)
+  console.log(user);
   await res.send(user);
 };
