@@ -61,7 +61,6 @@ exports.login = async (req, res, next) => {
         error: 'User not found',
       });
     } else if (user.status === 'block') {
-      console.log(user);
       res.status(401).json({
         message: 'Login not successful',
         error: 'You are blocked',
@@ -121,6 +120,6 @@ exports.getUsers = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   const { id, status } = req.body;
-  const user = await User.findByIdAndUpdate({ _id: id }, { status: status });
+  const user = await User.findOneAndUpdate({ _id: id }, { status: status },{new:true});
   await res.send(user);
 };
