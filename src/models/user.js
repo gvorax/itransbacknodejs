@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
+  select: {
+    type: Boolean,
+    require: true,
+    default: false,
+  },
   name: {
     type: 'string',
     require: true,
