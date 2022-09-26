@@ -29,6 +29,7 @@ exports.register = async (req, res, next) => {
           res.status(201).json({
             message: 'User successfully created',
             token,
+            user_id:user._id
           });
         })
         .catch((error) =>
@@ -86,6 +87,7 @@ exports.login = async (req, res, next) => {
           res.status(201).json({
             message: 'User successfully Logged in',
             token: token,
+            user_id:user._id
           });
         } else {
           res.status(400).json({ message: 'Login not succesful' });
@@ -122,7 +124,6 @@ exports.getUsers = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const { id, status, select } = req.body;
-    console.log(req.body);
     const user = await User.findOneAndUpdate(
       { _id: id },
       { $set: { status: status, select: select } },
