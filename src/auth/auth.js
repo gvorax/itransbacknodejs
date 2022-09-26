@@ -25,6 +25,7 @@ exports.register = async (req, res, next) => {
             httpOnly: true,
             maxAge: maxAge * 1000, // 3hrs in ms
           });
+          console.log(token);
           res.status(201).json({
             message: 'User successfully created',
             token,
@@ -100,7 +101,7 @@ exports.login = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
   await User.findByIdAndRemove(id)
     .then((user) =>
       res.status(201).json({ message: 'User successfully deleted', user })
@@ -119,11 +120,17 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.updateUser = async (req, res, next) => {
-  const { id, status, select } = req.body;
-  const user = await User.findOneAndUpdate(
-    { _id: id },
-    { $set: { status: status, select: select } },
-    { new: true }
-  );
-  await res.send(user);
+  try {
+    const { id, status, select } = req.body;
+    console.log(req.body);
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      { $set: { status: status, select: select } },
+      { new: true }
+    );
+
+    await res.send(user);
+  } catch (error) {
+    console.log(error);
+  }
 };
